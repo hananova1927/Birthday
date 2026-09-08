@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Happy Birthday My Love ❤️</title>
+
+  <style>
+  
+    :root {
+      --bg-color: #0b0205;
+      --card-bg: #1c0a10;
+      --accent-color: #ff3366;
+      --text-color: #ffffff;
+      --subtext: #e0a3b2;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: var(--bg-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* SCREEN MANAGEMENT */
+    .screen {
+      display: none;
+      width: 100%;
+      max-width: 450px;
+      min-height: 100vh;
+      margin: auto;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+      text-align: center;
+    }
+
+    .active {
+      display: flex;
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* WELCOME SCREEN */
+    .welcome-card {
+      background: var(--card-bg);
+      width: 100%;
+      padding: 35px 22px;
+      border-radius: 25px;
+      border: 1px solid rgba(255, 51, 102, 0.4);
+      box-shadow: 0 0 40px rgba(255, 51, 102, 0.15);
+    }
+
+    .welcome-card h1 {
+      color: var(--accent-color);
+      font-size: 2rem;
+      margin-bottom: 18px;
+    }
+
+    .welcome-card p {
+      color: var(--subtext);
+      line-height: 1.7;
+      margin-bottom: 15px;
+    }
+
+    .welcome-card h2 {
+      font-size: 1rem;
+      margin: 15px 0 20px;
+    }
+
+    .gift {
+      font-size: 4rem;
+      margin: 15px 0;
+      animation: giftBounce 1.5s infinite;
+    }
+
+    @keyframes giftBounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .floating-heart {
+      font-size: 2.5rem;
+      animation: heartBeat 1.2s infinite;
+    }
+
+    @keyframes heartBeat {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.3);
+      }
+    }
+
+    /* BUTTON */
+    button {
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 25px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 5px 20px rgba(255, 51, 102, 0.25);
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+
+    /* PASSKEY CARD */
+    .passkey-card {
+      background: var(--card-bg);
+      padding: 30px 20px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 51, 102, 0.3);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      width: 100%;
+    }
+
+    .passkey-card img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--accent-color);
+      margin-bottom: 15px;
+    }
+
+    input[type="password"] {
+      width: 80%;
+      padding: 12px;
+      border-radius: 25px;
+      border: 1px solid var(--accent-color);
+      background: transparent;
+      color: white;
+      text-align: center;
+      font-size: 1.1rem;
+      margin: 15px 0;
+      outline: none;
+    }
+
+    /* MAIN SCREEN */
+    #main-screen {
+      justify-content: flex-start;
+      padding-top: 50px;
+    }
+
+    #main-screen h1 {
+      color: var(--accent-color);
+      font-size: 1.8rem;
+    }
+
+    /* GALLERY */
+    .gallery {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      width: 100%;
+      padding: 10px 0 20px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+
+    .gallery::-webkit-scrollbar {
+      display: none;
+    }
+
+    .gallery-img {
+      min-width: 260px;
+      height: 350px;
+      object-fit: cover;
+      border-radius: 15px;
+      scroll-snap-align: center;
+      border: 2px solid var(--accent-color);
+      box-shadow: 0 5px 20px rgba(255, 51, 102, 0.15);
+    }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.88);
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      padding: 25px;
+      border-radius: 20px;
+      border: 1px solid var(--accent-color);
+      max-width: 350px;
+      max-height: 85vh;
+      overflow-y: auto;
+      position: relative;
+      animation: modalOpen 0.4s ease;
+    }
+
+    @keyframes modalOpen {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--subtext);
+    }
+
+    /* HEART CANVAS */
+    canvas {
+      width: 300px;
+      height: 300px;
+      margin-top: 15px;
+    }
+
+    /* FLOATING HEARTS */
+    .heart {
+      position: fixed;
+      bottom: -30px;
+      font-size: 20px;
+      animation: floatUp 5s linear forwards;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-100vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- BACKGROUND MUSIC -->
+  <audio id="bg-music" loop>
+    <source
+      src="i.m4a"
+      type="audio/mpeg">
+  </audio>
+
+
+  <!-- ========================= -->
+  <!-- SCREEN 0: WELCOME -->
+  <!-- ========================= -->
+
+  <div id="welcome-screen" class="screen active">
+
+    <div class="welcome-card">
+
+      <div class="floating-heart">❤️</div>
+
+      <h1>For You, My Love 💕</h1>
+
+      <p>
+        Today isn't just another day... ✨
+        <br>
+        It's the day someone very special was born.
+      </p>
+
+      <p>
+        I made something little for you,
+        filled with my love, memories, and wishes. 💌
+      </p>
+
+      <div class="gift">🎁</div>
+
+      <h2>
+        Are you ready for your surprise? 🥹❤️
+      </h2>
+
+      <button onclick="showPasskey()">
+        Open Your Surprise 💖
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- SCREEN 1: PASSKEY -->
+  <!-- ========================= -->
+
+  <div id="passkey-screen" class="screen">
+
+    <div class="passkey-card">
+
+      <img
+        src="ab.jpg"
+        alt="Boyfriend Photo"
+        id="lock-photo">
+
+      <h2>Enter Passkey 🔐</h2>
+
+      <p style="color: var(--subtext); font-size: 0.85rem; margin-top: 5px;">
+        Only for my special one ❤️
+      </p>
+
+      <input
+        type="password"
+        id="passkey-input"
+        placeholder="Enter password">
+
+      <br>
+
+      <button onclick="unlock()">
+        Unlock ❤️
+      </button>
+
+      <p
+        id="error-msg"
+        style="color:#ff4d4d; font-size:0.8rem; margin-top:8px; display:none;">
+        Incorrect passkey!
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- SCREEN 2: BIRTHDAY -->
+  <!-- ========================= -->
+
+  <div id="main-screen" class="screen">
+
+    <h1>
+      Happy Birthday, My Love ✨
+    </h1>
+
+    <p style="color: var(--subtext); margin: 5px 0 20px;">
+      Special Memories ❤️
+    </p>
+
+
+    <!-- PHOTO GALLERY -->
+
+    <div class="gallery">
+
+      <img
+        src="ab1.jpg"
+        class="gallery-img"
+        alt="Memory 1">
+
+      <img
+        src="ab2.jpg"
+        class="gallery-img"
+        alt="Memory 2">
+
+      <img
+        src="ab3.jpg"
+        class="gallery-img"
+        alt="Memory 3">
+
+    </div>
+
+
+    <!-- MESSAGE BUTTON -->
+
+    <button
+      style="margin-top: 20px;"
+      onclick="openModal()">
+
+      💌 Read My Message
+
+    </button>
+
+
+    <!-- HEART ANIMATION -->
+
+    <canvas id="heartCanvas"></canvas>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- MESSAGE MODAL -->
+  <!-- ========================= -->
+
+  <div id="message-modal" class="modal">
+
+    <div class="modal-content">
+
+      <span
+        class="close-btn"
+        onclick="closeModal()">
+
+        &times;
+
+      </span>
+
+      <h3
+        style="color: var(--accent-color); margin-bottom: 10px;">
+
+        Just For You ✨❤️
+
+      </h3>
+
+
+      <p
+        style="font-size: 0.95rem; line-height: 1.7; color: #f0e6e8;">
+
+        Happy Birthday to the most amazing person in my life! ❤️
+        You make every day brighter and happier.
+        Thank you for being who you are.
+
+        <br><br>
+
+        I wish you all the love, happiness, and success in the world. ✨
+
+        <br><br>
+
+        Yene yelbe sew slante kal yelegnm,
+        yene lyu betam new yemafekrh.
+        Fetari erejim, edme kemulu tena ga setolgn
+        and lay hunen giziyatoch ylefu,
+        destanm hazenm ante ga sihon lene etif drb new.
+
+        <br><br>
+
+        Mkniyatum betam slemwedh,
+        I can't bzu ltsf neber.
+        Hasabe gn alchalkum Mariyam.
+        I can't beka bcha gn hlmh tesaktolgn yasayegn.
+
+        <br><br>
+
+        Hulem destegna hunehlgn nur yene Geta,
+        yene kurat alegbtaye.
+        Yalante sewm ayakegnm.
+
+        <br><br>
+
+        Yene metawekiya bal,
+        betam betam afekrhalehu. ❤️
+
+        <br><br>
+
+        At the end emebete kefit kehula huna
+        ttebklgn yene bal hlmhn tasakalgn.
+
+        <br><br>
+
+        Fetari tselothn ykebelh,
+        meswathnm ykotrlh.
+
+        <br><br>
+
+        Kemekdesu redet yilaklh,
+        endelbh yisth,
+        fekadhnm hulu yifetsmlh.
+
+        <br><br>
+
+        Ena betam ewedhalehu 💞❤️
+
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- JAVASCRIPT -->
+  <!-- ========================= -->
+
+  <script>
+
+    /* SHOW PASSKEY SCREEN */
+
+    function showPasskey() {
+
+      document
+        .getElementById("welcome-screen")
+        .classList.remove("active");
+
+      document
+        .getElementById("passkey-screen")
+        .classList.add("active");
+
+      createHearts();
+
+    }
+
+
+    /* UNLOCK */
+
+    function unlock() {
+
+      const input =
+        document.getElementById("passkey-input").value;
+
+      const correctPasskey = "2026";
+
+      if (input === correctPasskey) {
+
+        document
+          .getElementById("passkey-screen")
+          .classList.remove("active");
+
+        document
+          .getElementById("main-screen")
+          .classList.add("active");
+
+        const music =
+          document.getElementById("bg-music");
+
+        music.play().catch(() => {
+          console.log("Music needs user interaction.");
+        });
+
+        startHeartAnimation();
+
+        createHearts();
+
+      } else {
+
+        document
+          .getElementById("error-msg")
+          .style.display = "block";
+
+      }
+
+    }
+
+
+    /* ENTER KEY FOR PASSWORD */
+
+    document
+      .getElementById("passkey-input")
+      .addEventListener("keypress", function(event) {
+
+        if (event.key === "Enter") {
+          unlock();
+        }
+
+      });
+
+
+    /* OPEN MESSAGE */
+
+    function openModal() {
+
+      document
+        .getElementById("message-modal")
+        .style.display = "flex";
+
+      createHearts();
+
+    }
+
+
+    /* CLOSE MESSAGE */
+
+    function closeModal() {
+
+      document
+        .getElementById("message-modal")
+        .style.display = "none";
+
+    }
+
+
+    /* CLICK OUTSIDE MODAL TO CLOSE */
+
+    document
+      .getElementById("message-modal")
+      .addEventListener("click", function(event) {
+
+        if (event.target === this) {
+          closeModal();
+        }
+
+      });
+
+
+    /* HEART CANVAS */
+
+    function startHeartAnimation() {
+
+      const canvas =
+        document.getElementById("heartCanvas");
+
+      const ctx =
+        canvas.getContext("2d");
+
+      canvas.width = 300;
+      canvas.height = 300;
+
+      let step = 0;
+
+      function draw() {
+
+        ctx.clearRect(
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
+
+        ctx.font = "10px sans-serif";
+        ctx.fillStyle = "#ff3366";
+
+        const totalPoints = 80;
+
+        for (let i = 0; i < totalPoints; i++) {
+
+          const t =
+            (i / totalPoints) * Math.PI * 2 + step;
+
+          const x =
+            16 * Math.pow(Math.sin(t), 3);
+
+          const y =
+            -(
+              13 * Math.cos(t)
+              - 5 * Math.cos(2 * t)
+              - 2 * Math.cos(3 * t)
+              - Math.cos(4 * t)
+            );
+
+          const cx =
+            canvas.width / 2 + x * 7;
+
+          const cy =
+            canvas.height / 2 + y * 7;
+
+          ctx.fillText(
+            "I love you",
+            cx - 15,
+            cy
+          );
+
+        }
+
+        step += 0.02;
+
+        requestAnimationFrame(draw);
+
+      }
+
+      draw();
+
+    }
+
+
+    /* FLOATING HEARTS */
+
+    function createHearts() {
+
+      for (let i = 0; i < 12; i++) {
+
+        setTimeout(() => {
+
+          const heart =
+            document.createElement("div");
+
+          heart.className = "heart";
+
+          heart.innerHTML =
+            ["❤️", "💖", "💕", "💗", "💞"][
+              Math.floor(Math.random() * 5)
+            ];
+
+          heart.style.left =
+            Math.random() * 100 + "vw";
+
+          heart.style.fontSize =
+            (15 + Math.random() * 20) + "px";
+
+          heart.style.animationDuration =
+            (3 + Math.random() * 3) + "s";
+
+          document.body.appendChild(heart);
+
+          setTimeout(() => {
+            heart.remove();
+          }, 6000);
+
+        }, i * 250);
+
+      }
+
+    }
+
+  </script>
+
+</body>
+</html>
